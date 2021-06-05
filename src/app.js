@@ -157,11 +157,11 @@ billboardTextures.homeSweetHomeTexture =
 
 //box textures
 let boxTexture = {};
-boxTexture.Github = "../src/jsm/githubLogo.png";
+boxTexture.Github = "./src/jsm/githubLogo.png";
 boxTexture.LinkedIn = "../src/jsm/linkedInLogo.png";
-boxTexture.mail = "../src/jsm/envelope.png";
-boxTexture.globe = "../src/jsm/thunder.png";
-boxTexture.reactIcon = "../src/jsm/react.png";
+boxTexture.mail = "./src/jsm/envelope.png";
+boxTexture.globe = "./src/jsm/thunder.png";
+boxTexture.reactIcon = "./src/jsm/react.png";
 boxTexture.allSkills = "../src/jsm/blueskills.png";
 boxTexture.lensFlareMain = "../src/jsm/lensflare0.png";
 boxTexture.skrillex = "../src/jsm/skrillex.png";
@@ -171,7 +171,7 @@ boxTexture.writing = "../src/jsm/writing.png";
 //text
 let inputText = {};
 inputText.terpSolutionsText = "../src/jsm/terp-solutions-text.png";
-inputText.activities = "../src/jsm/muscic.png";
+inputText.activities = "./src/jsm/muscic.png";
 inputText.bagholderBetsText = "../src/jsm/bagholderbets-text.png";
 inputText.homeSweetHomeText = "../src/jsm/home-sweet-home-text.png";
 inputText.staticPortfolio = "../src/jsm/static-portfolio.png";
@@ -199,7 +199,7 @@ URL.devTo =
  function simpleText(x, y, z, inputText, fontSize) {
   var text_loader = new THREE.FontLoader();
 
-  text_loader.load("../src/jsm/Roboto_Regular.json", function (font) {
+  text_loader.load("./src/jsm/Roboto_Regular.json", function (font) {
     var xMid, text;
 
     var color = 0xffffff;
@@ -238,7 +238,7 @@ URL.devTo =
 function floatingLabel(x, y, z, inputMessage) {
   var text_loader = new THREE.FontLoader();
 
-  text_loader.load("../src/jsm/Roboto_Regular.json", function (font) {
+  text_loader.load("./src/jsm/Roboto_Regular.json", function (font) {
     var xMid, text;
 
     var color = 0xffffff;
