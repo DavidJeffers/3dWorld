@@ -22,7 +22,7 @@ boxTexture.writing = "../src/jsm/writing.png";
 //text
 let inputText = {};
 inputText.terpSolutionsText = "../src/jsm/terp-solutions-text.png";
-inputText.activities = "../jsm/muscic.png";
+inputText.activities = "./jsm/muscic.png";
 inputText.bagholderBetsText = "../src/jsm/bagholderbets-text.png";
 inputText.homeSweetHomeText = "../src/jsm/home-sweet-home-text.png";
 inputText.staticPortfolio = "../src/jsm/static-portfolio.png";
