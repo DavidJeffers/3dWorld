@@ -1,12 +1,7 @@
 import * as THREE from "three";
 import { WEBGL } from "./WebGL";
 import * as Ammo from "./builds/ammo";
-import {
-  billboardTextures,
-  boxTexture,
-  inputText,
-  URL,
-} from "./resources/textures";
+
 
 import {
   setupEventHandlers,
@@ -44,12 +39,7 @@ import {
   moveParticles,
 } from "./resources/world";
 
-import {
-  simpleText,
-  floatingLabel,
-  allSkillsSection,
-  createTextOnPlane,
-} from "./resources/surfaces";
+
 
 import {
   pickPosition,
@@ -58,7 +48,190 @@ import {
   rotateCamera,
 } from "./resources/utils";
 
+let billboardTextures = {};
+billboardTextures.terpSolutionsTexture = "../src/jsm/terpSolutions.png";
+billboardTextures.bagHolderBetsTexture =
+  "../src/jsm/Bagholdersbetsbillboard.png";
+billboardTextures.homeSweetHomeTexture =
+  "../src/jsm/home-sweet-home-portrait.png";
 
+//box textures
+let boxTexture = {};
+boxTexture.Github = "../src/jsm/githubLogo.png";
+boxTexture.LinkedIn = "../src/jsm/linkedInLogo.png";
+boxTexture.mail = "../src/jsm/envelope.png";
+boxTexture.globe = "../src/jsm/thunder.png";
+boxTexture.reactIcon = "../src/jsm/react.png";
+boxTexture.allSkills = "../src/jsm/blueskills.png";
+boxTexture.lensFlareMain = "../src/jsm/lensflare0.png";
+boxTexture.skrillex = "../src/jsm/skrillex.png";
+boxTexture.edmText = "../src/jsm/EDM.png";
+boxTexture.writing = "../src/jsm/writing.png";
+
+//text
+let inputText = {};
+inputText.terpSolutionsText = "../src/jsm/terp-solutions-text.png";
+inputText.activities = "../src/jsm/muscic.png";
+inputText.bagholderBetsText = "../src/jsm/bagholderbets-text.png";
+inputText.homeSweetHomeText = "../src/jsm/home-sweet-home-text.png";
+inputText.staticPortfolio = "../src/jsm/static-portfolio.png";
+
+//SVG
+let SVG = {};
+SVG.reactLogo = "../src/jsm/react-svg.svg";
+
+//URLs
+let URL = {};
+URL.terpsolutions = "https://terpsolutions.com/";
+URL.davidjeffers = "https://davidjeffers.github.io/Portfolio/";
+URL.bagholderBets = "https://www.bagholderbets.com/welcome";
+URL.homeSweetHomeURL = "https://home-sweet-home-ip.herokuapp.com/";
+URL.gitHub = "https://github.com/DavidJeffers";
+URL.LinkedIn = "";
+URL.email = "https://mailto:arfloyd7@gmail.com";
+URL.githubBagholder = "";
+URL.githubHomeSweetHome = "";
+URL.devTo =
+  "";
+
+export { billboardTextures, boxTexture, inputText, URL };
+
+export function simpleText(x, y, z, inputText, fontSize) {
+  var text_loader = new THREE.FontLoader();
+
+  text_loader.load("../src/jsm/Roboto_Regular.json", function (font) {
+    var xMid, text;
+
+    var color = 0xffffff;
+
+    var matLite = new THREE.MeshBasicMaterial({
+      color: color,
+      transparent: false,
+      opacity: 1,
+      side: THREE.DoubleSide,
+    });
+
+    var message = inputText;
+
+    var shapes = font.generateShapes(message, fontSize);
+
+    var geometry = new THREE.ShapeBufferGeometry(shapes);
+
+    geometry.computeBoundingBox();
+
+    xMid = -0.5 * (geometry.boundingBox.max.x - geometry.boundingBox.min.x);
+
+    geometry.translate(xMid, 0, 0);
+
+    // make shape ( N.B. edge view not visible )
+
+    text = new THREE.Mesh(geometry, matLite);
+    text.position.z = z;
+    text.position.y = y;
+    text.position.x = x;
+    text.rotation.x = -Math.PI * 0.5;
+
+    scene.add(text);
+  });
+}
+
+export function floatingLabel(x, y, z, inputMessage) {
+  var text_loader = new THREE.FontLoader();
+
+  text_loader.load("../src/jsm/Roboto_Regular.json", function (font) {
+    var xMid, text;
+
+    var color = 0xffffff;
+
+    var matLite = new THREE.MeshBasicMaterial({
+      color: color,
+      transparent: false,
+      opacity: 1,
+      side: THREE.DoubleSide,
+    });
+
+    var message = inputMessage;
+
+    var shapes = font.generateShapes(message, 1);
+
+    var geometry = new THREE.ShapeBufferGeometry(shapes);
+
+    geometry.computeBoundingBox();
+
+    xMid = -0.5 * (geometry.boundingBox.max.x - geometry.boundingBox.min.x);
+
+    geometry.translate(xMid, 0, 0);
+
+    // make shape ( N.B. edge view not visible )
+
+    text = new THREE.Mesh(geometry, matLite);
+    text.position.z = z;
+    text.position.y = y;
+    text.position.x = x;
+    scene.add(text);
+  });
+}
+
+export function allSkillsSection(
+  x,
+  y,
+  z,
+  xScale,
+  zScale,
+  boxTexture,
+  URLLink = null
+) {
+  const boxScale = { x: xScale, y: 0.1, z: zScale };
+  let quat = { x: 0, y: 0, z: 0, w: 1 };
+  let mass = 0; //mass of zero = infinite mass
+
+  var geometry = new THREE.PlaneBufferGeometry(xScale, zScale);
+
+  const loader = new THREE.TextureLoader(manager);
+  const texture = loader.load(boxTexture);
+  texture.magFilter = THREE.LinearFilter;
+  texture.minFilter = THREE.LinearFilter;
+  texture.encoding = THREE.sRGBEncoding;
+  const loadedTexture = new THREE.MeshBasicMaterial({
+    map: texture,
+    transparent: false,
+  });
+  loadedTexture.depthWrite = true;
+  loadedTexture.depthTest = true;
+
+  const linkBox = new THREE.Mesh(geometry, loadedTexture);
+  linkBox.position.set(x, y, z);
+  linkBox.renderOrder = 1;
+  linkBox.rotation.x = -Math.PI * 0.5;
+  linkBox.receiveShadow = true;
+  linkBox.userData = { URL: URLLink };
+  scene.add(linkBox);
+}
+
+export function createTextOnPlane(x, y, z, inputText, size1, size2) {
+  // word text
+  var activitiesGeometry = new THREE.PlaneBufferGeometry(size1, size2);
+  const loader = new THREE.TextureLoader(manager);
+  var activitiesTexture = loader.load(inputText);
+  activitiesTexture.magFilter = THREE.NearestFilter;
+  activitiesTexture.minFilter = THREE.LinearFilter;
+  var activitiesMaterial = new THREE.MeshBasicMaterial({
+    alphaMap: activitiesTexture,
+    transparent: true,
+  });
+
+  activitiesMaterial.depthWrite = true;
+  activitiesMaterial.depthTest = true;
+  let activitiesText = new THREE.Mesh(activitiesGeometry, activitiesMaterial);
+  activitiesText.position.x = x;
+  activitiesText.position.y = y;
+  activitiesText.position.z = z;
+  activitiesText.rotation.x = -Math.PI * 0.5;
+
+  activitiesText.renderOrder = 1;
+
+  scene.add(activitiesText);
+}
 // start Ammo Engine
 Ammo().then((Ammo) => {
   //Ammo.js variable declaration
