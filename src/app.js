@@ -178,7 +178,7 @@ inputText.staticPortfolio = "../src/jsm/static-portfolio.png";
 
 //SVG
 let SVG = {};
-SVG.reactLogo = "../src/jsm/react-svg.svg";
+SVG.reactLogo = "./src/jsm/react-svg.svg";
 
 //URLs
 let URL = {};
